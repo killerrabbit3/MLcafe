@@ -45,13 +45,13 @@ plt.scatter(range(len(x_train[0])), np.transpose(x_train[0])[0])
 
 
 model = tf.keras.Sequential([
-    tf.keras.layers.Conv2D(filters=100, kernel_size=[2,2], use_bias=True, activation='relu', input_shape=(450,2)),
+    tf.keras.layers.Conv1D(filters=100, kernel_size=2, use_bias=True, activation='relu', input_shape=(450,2)),
     tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Conv2D(filters=100, kernel_size=[2,5], use_bias=True, activation='relu'),
+    tf.keras.layers.Conv1D(filters=100, kernel_size=5, use_bias=True, activation='relu'),
     tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Conv2D(filters=100, kernel_size=[2,10], use_bias=True, activation='relu'),
+    tf.keras.layers.Conv1D(filters=100, kernel_size=10, use_bias=True, activation='relu'),
     tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.MaxPool2D(pool_size=[2,2],strides=2),
+    tf.keras.layers.MaxPool1D(pool_size=2,strides=2),
     tf.keras.layers.Conv1D(filters=100, kernel_size=5, use_bias=True, activation='relu'),
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Conv1D(filters=100, kernel_size=10, use_bias=True, activation='relu'),

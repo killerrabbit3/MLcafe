@@ -43,31 +43,19 @@ plt.scatter(range(len(x_train[0])), np.transpose(x_train[0])[0])
 #plt.scatter(range(len(x_train[0])), x_train[0][1])
 
 
-
 model = tf.keras.Sequential([
-    tf.keras.layers.Conv1D(filters=100, kernel_size=2, use_bias=True, activation='relu', input_shape=(450,2)),
+    tf.keras.layers.Conv1D(filters=64, kernel_size=3, use_bias=False,  input_shape=(450,2)),
     tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Conv1D(filters=100, kernel_size=5, use_bias=True, activation='relu'),
-    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Conv1D(filters=100, kernel_size=10, use_bias=True, activation='relu'),
-    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.MaxPool1D(pool_size=2,strides=2),
-    tf.keras.layers.Conv1D(filters=100, kernel_size=5, use_bias=True, activation='relu'),
-    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Conv1D(filters=100, kernel_size=10, use_bias=True, activation='relu'),
-    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Conv1D(filters=100, kernel_size=20, use_bias=True, activation='relu'),
-    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.MaxPool1D(pool_size=2,strides=2),
+    tf.keras.layers.ReLU(),
     tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(100, activation = 'relu'),
-    tf.keras.layers.Dense(50, activation = 'relu'),
-    tf.keras.layers.Dense(10, activation = 'relu'),
-    tf.keras.layers.Dense(2, activation = 'softmax')
+    tf.keras.layers.Dense(5,  use_bias=False,),
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.ReLU(),
+    tf.keras.layers.Dense(2, activation = 'softmax', use_bias=False,)
 ])
 
-model.compile(optimizer=tf.keras.optimizers.Adam(lr=0.001),
+model.compile(optimizer=tf.keras.optimizers.Adam(lr=0.00001),
                 loss='sparse_categorical_crossentropy',
-                metrics= [tf.keras.metrics.SparseCategoricalAccuracy()])
+                metrics= ['accuracy'])
 
-model.fit(x_train, y_train, batch_size=400, epochs = 3, validation_data=(x_test, y_test))
+model.fit(x_train, y_train, batch_size=2000, epochs = 30, validation_data=(x_test, y_test))
